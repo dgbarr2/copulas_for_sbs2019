@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import multivarUniformClayton from "./components/createData/multivarUniformClayton"
+import multivarUniform from "./components/createData/multivarUniform"
+
+
 
 function App() {
+  let uTest = multivarUniform(1,2)
+  console.log("uniform01 = ", uTest[0])
+  let test = multivarUniformClayton(uTest,.2)
+  console.log("clayton01 = ", test)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div> Test
+      <svg x='0' y='0' width ='500' height='200'> 
+        <text x='20' y = '20'>u = blank</text>
+      </svg>
     </div>
   );
 }
