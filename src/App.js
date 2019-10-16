@@ -6,8 +6,8 @@ import multivarUniform from "./components/createData/multivarUniform"
 
 
 function App() {
-  let uTest = multivarUniform(1,2)
-  console.log("uniform01 = ", uTest[0])
+  let uTest = multivarUniform(2,2)
+  console.log("uniform01 = ", uTest)
   let test = multivarUniformClayton(uTest,.2)
   console.log("clayton01 = ", test)
   return (
