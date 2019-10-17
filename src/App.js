@@ -8,15 +8,13 @@ import multivarUniform from "./components/createData/multivarUniform"
 
 function App() {
   //let uTest = multivarUniform(2,2)
-  let uTest_3vars = multivarUniform(10,3)
+  let uTest_3vars = multivarUniform(2,3)  // Max (,.3)
   let uTest = uTest_3vars
-  console.log("uniform_2vars = ", uTest)
-  let test = multivarUniformClayton(uTest,.2)
-  console.log("clayton_2vars = ", test)
-  console.log(" ---------------- ")
-  console.log("uniform_3vars = ", uTest_3vars)
+  let test_2vars = multivarUniformClayton(uTest,.2)
   let test_3vars = multivarUniformClayton_3vars(uTest_3vars,.2) 
-  console.log("clayton_3vars = ", test_3vars)
+  console.log("[w1, w2, w3] = ", uTest_3vars)
+  console.log("[u1, u2] = ", test_2vars)
+  console.log("[u1, u2, u3] = ", test_3vars)
   return (
     <div> Test
       <svg x='0' y='0' width ='500' height='200'> 
