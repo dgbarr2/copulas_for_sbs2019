@@ -5,14 +5,19 @@ import multivarUniform from "../createData/multivarUniform"
 import multivarUniformClayton_3vars from "../createData/multivarUniformClayton_3vars"
 import correl from "../maths/correl"
 
+import { normalInvCDF } from "../maths/gaussianInversion/normalInvCDF"
+import { normalCDF } from "../maths/gaussianInversion/normalCDF"
 
 
+const uniform2Normal = normalInvCDF(0.5,0,1) 
+console.log("invCDF = ", uniform2Normal)
+console.log("normalCDF = ", normalCDF(uniform2Normal))
 // -------------
 const axes = () => {
 
     const axes_x = 100
     const axes_y = 100
-    const u = multivarUniform(2000,3)  // Max (,.3)
+    const u = multivarUniform(500,3)  // Max (,.3)
     const d = multivarUniformClayton_3vars(u,20)
 
     const transform = (data) => {
@@ -21,6 +26,25 @@ const axes = () => {
             return [x,y]
     }
     
+    // Create a varaible with a given correlation with u1
+    const ro = .5
+    const u1 = _.map(u, v => v[0])
+    const z1 = _.map(u, v => [normalInvCDF(v[0],0,1)])
+    const z2 = _.map(u, v => [normalInvCDF(v[1],0,1)])
+    console.log("u = ", u)
+    console.log("z1: ", z1) 
+    const temp = [z1,z2]
+    const test = temp[0].map((col, i) => temp.map(row => row[i]))
+    
+    console.log("test = ", test)
+    const z3_gaussian = _.map(test, v => Number(ro*v[0]) +  Math.sqrt(1 - ro*ro) * Number(v[1]))
+    const z3 = _.map(z3_gaussian, v => normalCDF(v,0,1))
+    console.log("u1: ", u1) 
+    console.log("z3: ", z3) 
+    const temp2 = [u1,z3]
+    const z = temp2[0].map((col,i) => temp2.map(row => row[i] ))
+    console.log(" z = ", z)
+
 console.log("d = ", d)
  
     const plotPoints_u = _.map (u, v => <circle key={v[0]} cx={transform(v)[0]} cy={transform(v)[1]} r='1.5' fill="red" />)
