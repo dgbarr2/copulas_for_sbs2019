@@ -10,9 +10,9 @@ function App() {
   let uTest = uTest_3vars
   let test_2vars = multivarUniformClayton(uTest,.2)
   let test_3vars = multivarUniformClayton_3vars(uTest_3vars,.2) 
-  console.log("[w1, w2, w3] = ", uTest_3vars)
-  console.log("[u1, u2] = ", test_2vars)
-  console.log("[u1, u2, u3] = ", test_3vars)
+  //console.log("[w1, w2, w3] = ", uTest_3vars)
+  //console.log("[u1, u2] = ", test_2vars)
+  //console.log("[u1, u2, u3] = ", test_3vars)
   return (
     <div> 
       <Axes claytonData={test_3vars}/>
