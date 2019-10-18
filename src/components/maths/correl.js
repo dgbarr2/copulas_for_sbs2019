@@ -20,7 +20,6 @@ const variance = (d) => {
     
     let m0 = avg(d)
     let n = d.length
-    console.log("m0 = ", m0)
     
     let v = 0
     for (let i=0;i<n;i++) {
