@@ -1,13 +1,11 @@
 import React from 'react';
-import './App.css';
 import multivarUniformClayton from "./components/createData/multivarUniformClayton"
 import multivarUniformClayton_3vars from "./components/createData/multivarUniformClayton_3vars"
 import multivarUniform from "./components/createData/multivarUniform"
-
+import Axes from "./components/graphics/axes"
 
 
 function App() {
-  //let uTest = multivarUniform(2,2)
   let uTest_3vars = multivarUniform(2,3)  // Max (,.3)
   let uTest = uTest_3vars
   let test_2vars = multivarUniformClayton(uTest,.2)
@@ -16,10 +14,8 @@ function App() {
   console.log("[u1, u2] = ", test_2vars)
   console.log("[u1, u2, u3] = ", test_3vars)
   return (
-    <div> Test
-      <svg x='0' y='0' width ='500' height='200'> 
-        <text x='20' y = '20'>u = blank</text>
-      </svg>
+    <div> 
+      <Axes claytonData={test_3vars}/>
     </div>
   );
 }
