@@ -1,6 +1,6 @@
 import React from "react"
 import _ from 'lodash'
-
+import "./axes.css"
 import multivarUniform from "../createData/multivarUniform"
 import multivarUniformClayton_3vars from "../createData/multivarUniformClayton_3vars"
 import { uniformCorrelated } from "../maths/gaussianInversion/uniformCorrelated" 
@@ -12,7 +12,7 @@ const axes = () => {
 
     const axes_x = 100
     const axes_y = 100
-    const u = multivarUniform(5,3)  // Max (.,3)
+    const u = multivarUniform(500,3)  // Max (.,3)
     const d = multivarUniformClayton_3vars(u,8)  // uniform vars, θ           
     
     const transform = (data) => {
@@ -43,15 +43,33 @@ console.log("correl of correlated u variables ('z') = ", correl(z))
 
     
     return (
-        <svg x="100" y="100" height='100%' width='80vw' viewBox="0,0,500,500" preserveAspectRatio='xMidYMid'>
+        <div className="container">
+        <svg x="1000" y="100" height='100%' width='80vw' viewBox="0,0,500,500" preserveAspectRatio='xMidYMid' float='left'>
             <rect x='0' y = '0' width='500' height='500' fill="gray" />
             <rect x={axes_x} y = {axes_y} width='300' height='300' fill="none" stroke="white" />
             
-            {plotPoints_c}
             {plotPoints_u}
+            {/* {plotPoints_u} 
+            {plotPoints_z}*/}
+
+        </svg>
+        <svg x="100" y="100" height='100%' width='80vw' viewBox="0,0,500,500" preserveAspectRatio='xMidYMid' float='right'>
+            <rect x='0' y = '0' width='500' height='500' fill="gray" />
+            <rect x={axes_x} y = {axes_y} width='300' height='300' fill="none" stroke="white" />
+            
+            
+            {plotPoints_c}
+
+        </svg>
+        <svg x="100" y="100" height='100%' width='80vw' viewBox="0,0,500,500" preserveAspectRatio='xMidYMid' float='right'>
+            <rect x='0' y = '0' width='500' height='500' fill="gray" />
+            <rect x={axes_x} y = {axes_y} width='300' height='300' fill="none" stroke="white" />
+            
+            
             {plotPoints_z}
 
         </svg>
+        </div>
     )
 }
 export default axes
