@@ -13,7 +13,7 @@ const axes = () => {
     const axes_x = 100
     const axes_y = 100
     const u = multivarUniform(500,3)  // Max (.,3)
-    const d = multivarUniformClayton_3vars(u,8)  // uniform vars, θ           
+    const d = multivarUniformClayton_3vars(u,40)  // uniform vars, θ           
     
     const transform = (data) => {
         const x = 100 + (data[0] * (400-100))
@@ -30,9 +30,9 @@ const axes = () => {
     const plotPoints_c = _.map (d, v => <circle key={v[0]} cx={transform(v)[0]} cy={transform(v)[1]} r='3' fill="blue" />)
     
 
-console.log("correl of u variables = ", correl(u))
-console.log("correl of Clayton variables = ", correl(d))
-console.log("correl of correlated u variables ('z') = ", correl(z))
+// console.log("correl of u variables = ", correl(u))
+// console.log("correl of Clayton variables = ", correl(d))
+// console.log("correl of correlated u variables ('z') = ", correl(z))
 // To generate a series with a given correl coeff with u1 see 
 // [1] http://comisef.wikidot.com/tutorial:correlateduniformvariates
 /// and
