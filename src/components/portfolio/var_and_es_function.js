@@ -33,23 +33,10 @@ const variance = (d) => {
     return v / n
 }
 
-const avLoss = (r,VaR) => {
-            let s = 0, n = 0
-            for (let i=0;i<r.length;i++) {
-                if (r[i] < VaR) {
-                    s += r[i]
-                    n = i
-                } else {
-                    break
-                }
-            }
-            return s / n
-        }
-
-class Var_and_es extends React.Component { 
-    render(){
-        let r_u = multivarUniform(this.props.sampleSize,2)  // Max (,.3)
-        let r_cl = multivarUniformClayton(r_u,this.props.θ)
+const var_and_es = (sampleSize,θ) => {
+    
+        let r_u = multivarUniform(sampleSize,2)  // Max (,.3)
+        let r_cl = multivarUniformClayton(r_u,θ)
 
     //console.log("r_u = ", r_u)
     //console.log("r_cl = ", r_cl)
@@ -61,8 +48,8 @@ class Var_and_es extends React.Component {
         
         let r_cl_g_sorted = r_cl_g.sort(function(a, b){return a[0]-b[0]});
         //console.log("r_cl_g_sorted = ", r_cl_g_sorted)
-        let cutOff = this.props.sampleSize / 2
-        let r_cl_g_upper = r_cl_g_sorted.slice(cutOff,this.props.sampleSize)
+        let cutOff = sampleSize / 2
+        let r_cl_g_upper = r_cl_g_sorted.slice(cutOff,sampleSize)
         //console.log("r_cl_g_upper = ", r_cl_g_upper)
         let ro = correl(r_cl_g)
         let ro_upper = correl(r_cl_g_upper)
@@ -93,7 +80,18 @@ class Var_and_es extends React.Component {
         let r_p_g_sorted = r_p_g.sort(function(a, b){return a-b});
         let r_p_cl_sorted = r_p_cl.sort(function(a, b){return a-b});
 
-         
+        const avLoss = (r,VaR) => {
+            let s = 0, n = 0
+            for (let i=0;i<r.length;i++) {
+                if (r[i] < VaR) {
+                    s += r[i]
+                    n = i
+                } else {
+                    break
+                }
+            }
+            return s / n
+        } 
 
         let r_p_g_loss = avLoss(r_p_g_sorted,estimated_VaR_g)    
         let r_p_cl_loss = avLoss(r_p_cl_sorted,estimated_VaR_cl)    
@@ -112,46 +110,21 @@ class Var_and_es extends React.Component {
     console.log("average r_p = ", avg_r_p_cl)
     console.log("variance_r_p = ", variance_r_p_cl)
     console.log("Estimated VaR = ", estimated_VaR_cl)
-    console.log("ExpLoss = ", r_p_cl_loss)
+    console.log("ExpLoss = ", r_p_g_loss)
     
     
     console.log(" ----------- Gaussian copula VaR")    
     console.log("average r_p = ", avg_r_p_g)
     console.log("variance_r_p = ", variance_r_p_g)
     console.log("Estimated VaR = ", estimated_VaR_g)
-    console.log("ExpLoss = ", r_p_g_loss)
+    console.log("ExpLoss = ", r_p_cl_loss)
     console.log(" ------------------------------------- ")
     console.log(" *** Why is the Gaussian expected loss greater than Clayton? ***")
     console.log(" ------------------------------------- ")
     
 
-        return (
-            <div>
-                <ul>
-                    <li>Sample size = {this.props.sampleSize}</li>
-                    <li>θ for the clayton copula = {this.props.θ}</li>
-                    <li>Correlation in upper half of Clayton (blue) data = {ro_upper.toFixed(2)} </li>
-                    <li>Correlation in the Gaussian (green) data = {ro_upper.toFixed(2)} </li>
-                    <li> For an equal-weighted 'Gaussian' portfolio:</li>
-                        <ul>
-                            <li> Average return = {avg_r_p_g.toFixed(2)}</li>
-                            <li> Standard deviation = {Math.sqrt(variance_r_p_g).toFixed(2)}</li>
-                            <li>Value at Risk (5%) = {estimated_VaR_g.toFixed(2)}</li>
-                            <li>Expected loss (5%) = {r_p_g_loss.toFixed(2)}</li>
-                        </ul>
-
-                        <li> For an equal-weighted 'Clayton' portfolio:</li>
-                        <ul>
-                            <li> Average return = {avg_r_p_cl.toFixed(2)}</li>
-                            <li> Standard deviation = {Math.sqrt(variance_r_p_cl).toFixed(2)}</li>
-                            <li>Value at Risk (5%) = {estimated_VaR_cl.toFixed(2)}</li>
-                            <li>Expected loss (5%) = {r_p_cl_loss.toFixed(2)}</li>
-                        </ul>
-                </ul>
-            </div>
-        )
-    }
+        return r_u
 }
 
-export default Var_and_es
+export default var_and_es
 
