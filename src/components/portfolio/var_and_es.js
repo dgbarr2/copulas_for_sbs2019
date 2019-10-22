@@ -125,21 +125,21 @@ class Var_and_es extends React.Component {
     //console.log("ro = ", ro)
     
 
-    console.log(" ----------- Clayton copula VaR")    
-    console.log("average r_p = ", avg_r_p_cl)
-    console.log("variance_r_p = ", variance_r_p_cl)
-    console.log("Estimated VaR = ", estimated_VaR_cl)
-    console.log("ExpLoss = ", r_p_cl_loss)
-    
-    
-    console.log(" ----------- Gaussian copula VaR")    
-    console.log("average r_p = ", avg_r_p_g)
-    console.log("variance_r_p = ", variance_r_p_g)
-    console.log("Estimated VaR = ", estimated_VaR_g)
-    console.log("ExpLoss = ", r_p_g_loss)
-    console.log(" ------------------------------------- ")
-    console.log(" *** Why is the Gaussian expected loss greater than Clayton? ***")
-    console.log(" ------------------------------------- ")
+    //console.log(" ----------- Clayton copula VaR")    
+    //console.log("average r_p = ", avg_r_p_cl)
+    //console.log("variance_r_p = ", variance_r_p_cl)
+    //console.log("Estimated VaR = ", estimated_VaR_cl)
+    //console.log("ExpLoss = ", r_p_cl_loss)
+    //
+    //
+    //console.log(" ----------- Gaussian copula VaR")    
+    //console.log("average r_p = ", avg_r_p_g)
+    //console.log("variance_r_p = ", variance_r_p_g)
+    //console.log("Estimated VaR = ", estimated_VaR_g)
+    //console.log("ExpLoss = ", r_p_g_loss)
+    //console.log(" ------------------------------------- ")
+    //console.log(" *** Why is the Gaussian expected loss greater than //Clayton? ***")
+    //console.log(" ------------------------------------- ")
     
         let styles = {
             marginLeft: '100px'
@@ -149,8 +149,12 @@ class Var_and_es extends React.Component {
                 <ul>
                     <li>Sample size = {this.props.sampleSize}</li>
                     <li>θ for the clayton copula = {this.props.θ}</li>
-                    <li>Correlation in top-right quarter of Clayton (blue) data = {ro_upper.toFixed(2)} </li>
-                    <li>Correlation in all of the Gaussian (green) data = {ro_upper.toFixed(2)} </li>
+                    <li>Correlation in the Clayton (blue) data:</li>
+                        <ul>
+                            <li> Full sample: {ro.toFixed(2)}</li>
+                            <li>Top-right quarter only: {ro_upper.toFixed(2)} </li>
+                        </ul>
+                    <li>Correlation in all of the Gaussian (green) data constrained to be  {ro_upper.toFixed(2)} </li>
                     <li> For an equal-weighted 'Gaussian' (green) portfolio:</li>
                         <ul>
                             <li> Average return = {avg_r_p_g.toFixed(2)}</li>
@@ -167,7 +171,7 @@ class Var_and_es extends React.Component {
                             <li>Expected loss (5%) = {r_p_cl_loss.toFixed(2)}</li>
                         </ul>
                 </ul>
-                <span style={{color:"red"}}>Why are the portfolio's avg and sd not equal?</span>
+                <span style={{color:"red"}}>Why are the portfolio's avg and sd not equal? They are when we use the full sample Clayton correlation (ro) to generate the Gaussian data - they differ when we use the upper quartile of Clayton data.</span>
             </div>
         )
     }

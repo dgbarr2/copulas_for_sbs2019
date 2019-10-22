@@ -9,7 +9,7 @@ import Var_and_es from "./components/portfolio/var_and_es"
 
 
 function App() {
-  const sampleSize = 50
+  const sampleSize = 5000
   const θ = 3
 
   //var_and_es(sampleSize,θ)
