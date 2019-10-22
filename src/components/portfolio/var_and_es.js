@@ -91,6 +91,27 @@ class Var_and_es extends React.Component {
     //console.log("r_u_g = ", r_u_g)
 
         let r_g_g = _.map(r_u_g, v => [normalInvCDF(v[0], 0, 1), normalInvCDF(v[1], 0, 1)])
+        
+    // Check the parameters of the Normal variables.
+    // Gausian copula first:
+
+        let r_g_g_1 = _.map(r_g_g,v => v[0])
+        let r_g_g_2 = _.map(r_g_g,v => v[1])
+        console.log("r_g_g_1(mean,var) = ", avg(r_g_g_1), variance(r_g_g_1))
+        console.log("r_g_g_2(mean,var) = ", avg(r_g_g_2), variance(r_g_g_2))
+
+        // Clayton copula second:
+        
+        let r_cl_g_1 = _.map(r_cl_g,v => v[0])
+        let r_cl_g_2 = _.map(r_cl_g,v => v[1])
+        console.log("r_cl_g_1(mean,var) = ", avg(r_cl_g_1), variance(r_cl_g_1))
+        console.log("r_cl_g_2(mean,var) = ", avg(r_cl_g_2), variance(r_cl_g_2))
+
+
+
+
+
+
     //console.log("r_g_g = ", r_g_g)
 
         // Key:
