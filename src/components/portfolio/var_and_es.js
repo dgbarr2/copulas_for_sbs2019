@@ -46,6 +46,18 @@ const avLoss = (r,VaR) => {
             return s / n
         }
 
+
+const selectTopRight = (d) =>{
+    let topRight = []
+    for (let i=0;i<d.length;i++) {
+        if (d[i][0]>0 & d[i][1]>0) {
+            topRight.push(d[i])
+        }
+    }
+    return topRight
+
+
+}
 class Var_and_es extends React.Component { 
     render(){
         let r_u = multivarUniform(this.props.sampleSize,2)  // Max (,.3)
@@ -57,12 +69,17 @@ class Var_and_es extends React.Component {
         let r_cl_g = _.map(r_cl, v => [normalInvCDF(v[0], 0, 1), normalInvCDF(v[1], 0, 1)])
         //console.log("r_cl_g = ", r_cl_g)
         
-        // Sort ascending and base the estimate of ro from the upper half:
+        // Sort (ascending) and base the estimate of ro from the upper half:
         
-        let r_cl_g_sorted = r_cl_g.sort(function(a, b){return a[0]-b[0]});
+        //let test = _.map(r_cl_g,v => {if (v[0] >0 & v[1]>0){return [v[0],//v[1]]}})
+        //console.log("test = ", test)
+
+        //let r_cl_g_sorted = r_cl_g.sort(function(a, b){return a[0]-b[0]});
+        let r_cl_g_upper = selectTopRight(r_cl_g)
+
         //console.log("r_cl_g_sorted = ", r_cl_g_sorted)
-        let cutOff = this.props.sampleSize / 2
-        let r_cl_g_upper = r_cl_g_sorted.slice(cutOff,this.props.sampleSize)
+        //let cutOff = this.props.sampleSize / 2
+        //let r_cl_g_upper = r_cl_g_sorted.slice(cutOff,this.props.sampleSize)
         //console.log("r_cl_g_upper = ", r_cl_g_upper)
         let ro = correl(r_cl_g)
         let ro_upper = correl(r_cl_g_upper)
@@ -124,15 +141,17 @@ class Var_and_es extends React.Component {
     console.log(" *** Why is the Gaussian expected loss greater than Clayton? ***")
     console.log(" ------------------------------------- ")
     
-
+        let styles = {
+            marginLeft: '100px'
+        }
         return (
-            <div>
+            <div style={styles}>
                 <ul>
                     <li>Sample size = {this.props.sampleSize}</li>
                     <li>θ for the clayton copula = {this.props.θ}</li>
-                    <li>Correlation in upper half of Clayton (blue) data = {ro_upper.toFixed(2)} </li>
-                    <li>Correlation in the Gaussian (green) data = {ro_upper.toFixed(2)} </li>
-                    <li> For an equal-weighted 'Gaussian' portfolio:</li>
+                    <li>Correlation in top-right quarter of Clayton (blue) data = {ro_upper.toFixed(2)} </li>
+                    <li>Correlation in all of the Gaussian (green) data = {ro_upper.toFixed(2)} </li>
+                    <li> For an equal-weighted 'Gaussian' (green) portfolio:</li>
                         <ul>
                             <li> Average return = {avg_r_p_g.toFixed(2)}</li>
                             <li> Standard deviation = {Math.sqrt(variance_r_p_g).toFixed(2)}</li>
@@ -140,7 +159,7 @@ class Var_and_es extends React.Component {
                             <li>Expected loss (5%) = {r_p_g_loss.toFixed(2)}</li>
                         </ul>
 
-                        <li> For an equal-weighted 'Clayton' portfolio:</li>
+                        <li> For an equal-weighted 'Clayton' (blue) portfolio:</li>
                         <ul>
                             <li> Average return = {avg_r_p_cl.toFixed(2)}</li>
                             <li> Standard deviation = {Math.sqrt(variance_r_p_cl).toFixed(2)}</li>
@@ -148,6 +167,7 @@ class Var_and_es extends React.Component {
                             <li>Expected loss (5%) = {r_p_cl_loss.toFixed(2)}</li>
                         </ul>
                 </ul>
+                <span style={{color:"red"}}>Why are the portfolio's avg and sd not equal?</span>
             </div>
         )
     }
