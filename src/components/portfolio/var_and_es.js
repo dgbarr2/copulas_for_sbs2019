@@ -48,8 +48,8 @@ const var_and_es = (sampleSize,θ) => {
         
         let r_cl_g_sorted = r_cl_g.sort(function(a, b){return a[0]-b[0]});
         //console.log("r_cl_g_sorted = ", r_cl_g_sorted)
-        let cutOff = nobs / 2
-        let r_cl_g_upper = r_cl_g_sorted.slice(cutOff,nobs)
+        let cutOff = sampleSize / 2
+        let r_cl_g_upper = r_cl_g_sorted.slice(cutOff,sampleSize)
         //console.log("r_cl_g_upper = ", r_cl_g_upper)
         let ro = correl(r_cl_g)
         let ro_upper = correl(r_cl_g_upper)
