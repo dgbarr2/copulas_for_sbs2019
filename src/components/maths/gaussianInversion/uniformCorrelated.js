@@ -28,7 +28,7 @@ const uniformCorrelated = (u,ro) => {
     const mat = makeMat(z0,z1)
     const z2 = _.map(mat, v => ro*v[0] + Math.sqrt(1-ro*ro) * v[1])
     console.log("corr(z0,z2) = ", correl(makeMat(z0,z2)))
-
+    console.log("inputted ro = ", ro)
     const u2 = _.map(z2, v => normalCDF(v,0,1))
 
 

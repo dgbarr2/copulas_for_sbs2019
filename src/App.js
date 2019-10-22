@@ -6,14 +6,16 @@ import Axes from "./components/graphics/axes"
 import var_and_es from "./components/portfolio/var_and_es"
 
 
-function App() {
-  
 
-  var_and_es()
+function App() {
+  const sampleSize = 200
+  const θ = 3
+
+  var_and_es(sampleSize,θ)
 
   return (
     <div> 
-      <Axes />
+      <Axes sampleSize={sampleSize} θ={θ} />
     </div>
   );
 }

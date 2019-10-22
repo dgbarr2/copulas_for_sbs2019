@@ -8,12 +8,13 @@ import { uniformCorrelated } from "../maths/gaussianInversion/uniformCorrelated"
 import correl  from "../maths/correl"
 
 
-const axes = () => {
-
+//const axes = () => {
+class Axes extends React.Component {
+    render(){
     const axes_x = 100
     const axes_y = 100
-    const u = multivarUniform(500,3)  // Max (.,3)
-    const d = multivarUniformClayton_3vars(u,40)  // uniform vars, θ           
+    const u = multivarUniform(this.props.sampleSize,3)  // Max (.,3)
+    const d = multivarUniformClayton_3vars(u,this.props.θ)  // uniform vars, θ           
     
     const transform = (data) => {
         const x = 100 + (data[0] * (400-100))
@@ -24,7 +25,10 @@ const axes = () => {
     const ro = correl(d)
     const z = uniformCorrelated(u,ro) // uniform u[0] and new uniform variable  
     
-    
+    // u: uniform, uncorrelated
+    // d: uniform Clayton
+    // z: uniform Gaussian copula with ro equal to that constructed from    d data. 
+         
     const plotPoints_u = _.map (u, v => <circle key={v[0]} cx={transform(v)[0]} cy={transform(v)[1]} r='3' fill="red" />)
     const plotPoints_z = _.map (z, v => <circle key={v[0]} cx={transform(v)[0]} cy={transform(v)[1]} r='3' fill="green" opacity="1"/> )
     const plotPoints_c = _.map (d, v => <circle key={v[0]} cx={transform(v)[0]} cy={transform(v)[1]} r='3' fill="blue" />)
@@ -44,7 +48,7 @@ const axes = () => {
     
     return (
         <div className="container">
-        <svg x="1000" y="100" height='100%' width='80vw' viewBox="0,0,500,500" preserveAspectRatio='xMidYMid' float='left'>
+        <svg x="100" y="100" height='100%' width='80vw' viewBox="0,0,500,500" preserveAspectRatio='xMidYMid' float='left'>
             <rect x='0' y = '0' width='500' height='500' fill="gray" />
             <rect x={axes_x} y = {axes_y} width='300' height='300' fill="none" stroke="white" />
             
@@ -71,5 +75,6 @@ const axes = () => {
         </svg>
         </div>
     )
+        }
 }
-export default axes
+export default Axes
